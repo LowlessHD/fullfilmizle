@@ -1,0 +1,183 @@
+// src/lib/bot/fallback-data.ts
+// TMDB API anahtarı tanımlanmadığında veya bağlantı kesildiğinde kullanılan
+// gerçek TMDB ID'li zengin içerik havuzu.
+
+export const fallbackMovies = [
+  {
+    tmdbId: 693134,
+    title: "Dune: Çöl Gezegeni Bölüm İki",
+    originalTitle: "Dune: Part Two",
+    overview: "Paul Atreides, Chani ve Fremenlerle birleşerek ailesini yok eden komploculara karşı intikam savaşı başlatır. Hayatının aşkı ile bilinen evrenin kaderi arasında bir seçim yapmak zorunda kalırken, yalnızca kendisinin öngörebileceği korkunç bir geleceği engellemeye çalışır.",
+    posterPath: "/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg",
+    backdropPath: "/xOMo8BRK7PfcJv9JCnx7s520DRq.jpg",
+    releaseDate: "2024-03-01",
+    voteAverage: 8.2,
+    runtime: 166,
+    genres: [{ id: 878, name: "Bilim Kurgu" }, { id: 12, name: "Macera" }],
+    actors: [
+      { id: 1190668, name: "Timothée Chalamet", character: "Paul Atreides", photo: "/BE2sdjpgsa2rNTFa66f7upkaOP.jpg" },
+      { id: 505710, name: "Zendaya", character: "Chani", photo: "/tyB4pba0c9b4N1R92Y9eU8g80b8.jpg" },
+      { id: 934, name: "Rebecca Ferguson", character: "Lady Jessica", photo: "/4aEt1s1d3s65a7f6f5d4e.jpg" },
+    ],
+  },
+  {
+    tmdbId: 872585,
+    title: "Oppenheimer",
+    originalTitle: "Oppenheimer",
+    overview: "Amerikalı bilim insanı J. Robert Oppenheimer'ın ve Manhattan Projesi'nde atom bombasının geliştirilmesindeki kritik rolünün hikayesi.",
+    posterPath: "/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
+    backdropPath: "/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg",
+    releaseDate: "2023-07-21",
+    voteAverage: 8.1,
+    runtime: 180,
+    genres: [{ id: 18, name: "Drama" }, { id: 36, name: "Tarih" }],
+    actors: [
+      { id: 2037, name: "Cillian Murphy", character: "J. Robert Oppenheimer", photo: "/360KvgD9945MMIKAcvRzAhTNu7H.jpg" },
+      { id: 5081, name: "Emily Blunt", character: "Katherine Oppenheimer", photo: "/5N0e6k08t4g08a0s8.jpg" },
+      { id: 3223, name: "Robert Downey Jr.", character: "Lewis Strauss", photo: "/1YjdSym1jA75nGezIspYAZMw5fc.jpg" },
+    ],
+  },
+  {
+    tmdbId: 157336,
+    title: "Yıldızlararası",
+    originalTitle: "Interstellar",
+    overview: "İnsanlığın Dünya'daki son günleri yaklaşırken, bir grup kâşif insanlığın hayatta kalmasını sağlamak için bir solucan deliğinden geçerek yıldızlararası bir yolculuğa çıkar.",
+    posterPath: "/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+    backdropPath: "/xJHokMbljvjADYdit5fK5VQsXEG.jpg",
+    releaseDate: "2014-11-07",
+    voteAverage: 8.4,
+    runtime: 169,
+    genres: [{ id: 12, name: "Macera" }, { id: 18, name: "Drama" }, { id: 878, name: "Bilim Kurgu" }],
+    actors: [
+      { id: 10297, name: "Matthew McConaughey", character: "Cooper", photo: "/eDIFIwZz1Ld1f05Y4g6g7.jpg" },
+      { id: 1813, name: "Anne Hathaway", character: "Brand", photo: "/tLKit59zRIO2iHg5N84.jpg" },
+    ],
+  },
+  {
+    tmdbId: 27205,
+    title: "Başlangıç",
+    originalTitle: "Inception",
+    overview: "Dom Cobb, insanların rüyalarından bilinçaltının en derin sırlarını çalabilen yetenekli bir hırsızdır. Ona bu kez tersine bir görev verilir: bir fikri çalmak yerine bir zihne yerleştirmek.",
+    posterPath: "/edv5CZvWj09upOsy2Y6IwDhK8bt.jpg",
+    backdropPath: "/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg",
+    releaseDate: "2010-07-16",
+    voteAverage: 8.4,
+    runtime: 148,
+    genres: [{ id: 28, name: "Aksiyon" }, { id: 878, name: "Bilim Kurgu" }, { id: 12, name: "Macera" }],
+    actors: [
+      { id: 6193, name: "Leonardo DiCaprio", character: "Dom Cobb", photo: "/wo2AlXaqBtN0Gh.jpg" },
+      { id: 24045, name: "Joseph Gordon-Levitt", character: "Arthur", photo: "/dhv5nfd6.jpg" },
+    ],
+  },
+  {
+    tmdbId: 414906,
+    title: "The Batman",
+    originalTitle: "The Batman",
+    overview: "Gotham Şehri'nin yeraltı dünyasındaki gizemli cinayetleri soruşturan Batman, kentin seçkinlerini hedef alan sadist bir seri katil olan Bulmaca'nın ardındaki gerçeği ortaya çıkarmaya çalışır.",
+    posterPath: "/74xTEgt7R36Fpooo50r9T25onhq.jpg",
+    backdropPath: "/5P8SmMzSNYikXpxil6BYz9G660E.jpg",
+    releaseDate: "2022-03-04",
+    voteAverage: 7.7,
+    runtime: 176,
+    genres: [{ id: 80, name: "Suç" }, { id: 9648, name: "Gizem" }, { id: 28, name: "Aksiyon" }],
+    actors: [
+      { id: 11288, name: "Robert Pattinson", character: "Bruce Wayne / Batman", photo: "/7A8N.jpg" },
+      { id: 37153, name: "Zoë Kravitz", character: "Selina Kyle / Catwoman", photo: "/zk9.jpg" },
+    ],
+  },
+  {
+    tmdbId: 533535,
+    title: "Deadpool & Wolverine",
+    originalTitle: "Deadpool & Wolverine",
+    overview: "Zaman Değişimi Otoritesi tarafından göreve çağrılan umursamaz kahraman Deadpool, çoklu evrenin tehlikeye girmesiyle birlikte isteksizce Wolverine ile bir araya gelir.",
+    posterPath: "/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
+    backdropPath: "/yDHYTfA3R0jFYba16jBB1jv8uaC.jpg",
+    releaseDate: "2024-07-26",
+    voteAverage: 7.9,
+    runtime: 128,
+    genres: [{ id: 28, name: "Aksiyon" }, { id: 35, name: "Komedi" }, { id: 878, name: "Bilim Kurgu" }],
+    actors: [
+      { id: 10859, name: "Ryan Reynolds", character: "Wade Wilson / Deadpool", photo: "/4SYFd.jpg" },
+      { id: 6968, name: "Hugh Jackman", character: "Logan / Wolverine", photo: "/cpW.jpg" },
+    ],
+  },
+];
+
+export const fallbackTvShows = [
+  {
+    tmdbId: 1396,
+    title: "Breaking Bad",
+    originalTitle: "Breaking Bad",
+    overview: "Kanser teşhisi konan bir lise kimya öğretmeni, ailesinin mali geleceğini güvence altına almak için eski bir öğrencisiyle metamfetamin üretip satmaya başlar.",
+    posterPath: "/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg",
+    backdropPath: "/9faGSFi5jam6pDWGNdcu8f8ioNq.jpg",
+    firstAirDate: "2008-01-20",
+    voteAverage: 8.9,
+    genres: [{ id: 18, name: "Drama" }, { id: 80, name: "Suç" }],
+    seasons: [
+      {
+        seasonNumber: 1,
+        title: "1. Sezon",
+        posterPath: "/1yeOxzWr9cqnw9.jpg",
+        episodes: [
+          { episodeNumber: 1, title: "Pilot", overview: "Walter White, akciğer kanseri olduğunu öğrendikten sonra Jesse Pinkman ile metamfetamin üretmeye başlar.", duration: 58 },
+          { episodeNumber: 2, title: "Cat's in the Bag...", overview: "Walt ve Jesse işlerin kontrolden çıkmasıyla oluşan ilk krizle yüzleşir.", duration: 48 },
+          { episodeNumber: 3, title: "...And the Bag's in the River", overview: "Walt ahlaki bir ikilemin eşiğinde çok zor bir karar vermek zorunda kalır.", duration: 48 },
+        ],
+      },
+      {
+        seasonNumber: 2,
+        title: "2. Sezon",
+        posterPath: "/e1O9mZ6.jpg",
+        episodes: [
+          { episodeNumber: 1, title: "Seven Thirty-Seven", overview: "Walt ve Jesse tehlikeli kartel lideri Tuco ile karşı karşıya gelir.", duration: 47 },
+          { episodeNumber: 2, title: "Grilled", overview: "Çölün ortasında köşeye sıkışan ikili bir çıkış yolu arar.", duration: 48 },
+        ],
+      },
+    ],
+  },
+  {
+    tmdbId: 1399,
+    title: "Game of Thrones",
+    originalTitle: "Game of Thrones",
+    overview: "Westeros diyarının Yedi Krallığı'nı kontrol etmek için soylu hanedanlar arasında acımasız ve kanlı bir taht mücadelesi başlar.",
+    posterPath: "/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg",
+    backdropPath: "/suopoADq0k8YZr4dQXcU6p0qYq2.jpg",
+    firstAirDate: "2011-04-17",
+    voteAverage: 8.4,
+    genres: [{ id: 10765, name: "Bilim Kurgu & Fantastik" }, { id: 18, name: "Drama" }, { id: 10759, name: "Aksiyon & Macera" }],
+    seasons: [
+      {
+        seasonNumber: 1,
+        title: "1. Sezon",
+        posterPath: "/gwPSoYhvHOvfAD.jpg",
+        episodes: [
+          { episodeNumber: 1, title: "Winter Is Coming", overview: "Kral Robert Baratheon, Winterfell'e gelerek Lord Eddard Stark'a Kral Eli teklifinde bulunur.", duration: 62 },
+          { episodeNumber: 2, title: "The Kingsroad", overview: "Ned Stark güneye doğru yola çıkarken, Jon Snow Duvar'a Gece Nöbetçileri'ne katılmaya gider.", duration: 56 },
+        ],
+      },
+    ],
+  },
+  {
+    tmdbId: 66732,
+    title: "Stranger Things",
+    originalTitle: "Stranger Things",
+    overview: "Küçük bir kasabada genç bir çocuğun kaybolması, gizli deneyler, doğaüstü güçler ve tuhaf bir küçük kız içeren bir gizemi ortaya çıkarır.",
+    posterPath: "/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+    backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+    firstAirDate: "2016-07-15",
+    voteAverage: 8.6,
+    genres: [{ id: 10765, name: "Bilim Kurgu & Fantastik" }, { id: 18, name: "Drama" }, { id: 9648, name: "Gizem" }],
+    seasons: [
+      {
+        seasonNumber: 1,
+        title: "1. Sezon",
+        posterPath: "/2bQp1.jpg",
+        episodes: [
+          { episodeNumber: 1, title: "Chapter One: The Vanishing of Will Byers", overview: "Will Byers kasabada esrarengiz bir şekilde kaybolur.", duration: 48 },
+          { episodeNumber: 2, title: "Chapter Two: The Weirdo on Maple Street", overview: "Çocuklar ormanda özel güçleri olan Onbir ile tanışır.", duration: 55 },
+        ],
+      },
+    ],
+  },
+];

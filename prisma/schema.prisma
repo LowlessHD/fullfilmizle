@@ -1,0 +1,302 @@
+// prisma/schema.prisma
+// FullFilmİzle - PostgreSQL Veritabanı Şeması
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── ENUM'LAR ──────────────────────────────────────
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum ContentType {
+  MOVIE
+  SERIES
+}
+
+enum ContentStatus {
+  ACTIVE
+  DRAFT
+  REMOVED
+}
+
+enum SubtitleFormat {
+  VTT
+  SRT
+}
+
+enum AdPosition {
+  PRE_ROLL
+  MID_ROLL
+  BANNER
+  POPUP
+  SIDEBAR
+}
+
+// ─── KULLANICI ─────────────────────────────────────
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  username     String   @unique
+  passwordHash String   @map("password_hash")
+  role         UserRole @default(USER)
+  avatarUrl    String?  @map("avatar_url")
+  createdAt    DateTime @default(now()) @map("created_at")
+  lastLogin    DateTime? @map("last_login")
+
+  watchHistory WatchHistory[]
+  favorites    Favorite[]
+  comments     Comment[]
+
+  @@map("users")
+}
+
+// ─── İÇERİK (FİLM & DİZİ) ──────────────────────────
+
+model Content {
+  id              String        @id @default(uuid())
+  title           String
+  originalTitle   String?       @map("original_title")
+  slug            String        @unique
+  type            ContentType
+  description     String?       @db.Text
+  posterUrl       String?       @map("poster_url")
+  backdropUrl     String?       @map("backdrop_url")
+  trailerUrl      String?       @map("trailer_url")
+  tmdbId          Int?          @unique @map("tmdb_id")
+  imdbRating      Float?        @map("imdb_rating")
+  releaseYear     Int?          @map("release_year")
+  durationMinutes Int?          @map("duration_minutes")
+  country         String?
+  language        String?
+  quality         String?       @default("HD")
+  viewCount       Int           @default(0) @map("view_count")
+  status          ContentStatus @default(ACTIVE)
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  genres       ContentGenre[]
+  seasons      Season[]
+  sources      WatchSource[]
+  subtitles    Subtitle[]
+  actors       ContentActor[]
+  watchHistory WatchHistory[]
+  favorites    Favorite[]
+  comments     Comment[]
+
+  @@index([type, status])
+  @@index([releaseYear])
+  @@index([imdbRating])
+  @@map("contents")
+}
+
+// ─── TÜRLER ─────────────────────────────────────────
+
+model Genre {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  slug String @unique
+
+  contents ContentGenre[]
+
+  @@map("genres")
+}
+
+model ContentGenre {
+  contentId String @map("content_id")
+  genreId   Int    @map("genre_id")
+
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  genre   Genre   @relation(fields: [genreId], references: [id], onDelete: Cascade)
+
+  @@id([contentId, genreId])
+  @@map("content_genres")
+}
+
+// ─── SEZONLAR & BÖLÜMLER ────────────────────────────
+
+model Season {
+  id           String @id @default(uuid())
+  contentId    String @map("content_id")
+  seasonNumber Int    @map("season_number")
+  title        String?
+  posterUrl    String? @map("poster_url")
+  episodeCount Int    @default(0) @map("episode_count")
+
+  content  Content   @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  episodes Episode[]
+
+  @@unique([contentId, seasonNumber])
+  @@map("seasons")
+}
+
+model Episode {
+  id             String   @id @default(uuid())
+  seasonId       String   @map("season_id")
+  episodeNumber  Int      @map("episode_number")
+  title          String?
+  description    String?  @db.Text
+  durationMinutes Int?    @map("duration_minutes")
+  stillUrl       String?  @map("still_url")
+  airDate        DateTime? @map("air_date")
+
+  season       Season         @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  sources      WatchSource[]
+  subtitles    Subtitle[]
+  watchHistory WatchHistory[]
+  comments     Comment[]
+
+  @@unique([seasonId, episodeNumber])
+  @@map("episodes")
+}
+
+// ─── İZLEME KAYNAKLARI ──────────────────────────────
+
+model WatchSource {
+  id         String  @id @default(uuid())
+  contentId  String  @map("content_id")
+  episodeId  String? @map("episode_id")
+  sourceName String  @map("source_name")
+  embedUrl   String  @map("embed_url")
+  quality    String  @default("HD")
+  language   String  @default("Türkçe Altyazılı")
+  priority   Int     @default(0)
+  isActive   Boolean @default(true) @map("is_active")
+
+  content Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  episode Episode? @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+
+  @@map("watch_sources")
+}
+
+// ─── ALTYAZILAR ─────────────────────────────────────
+
+model Subtitle {
+  id        String         @id @default(uuid())
+  contentId String         @map("content_id")
+  episodeId String?        @map("episode_id")
+  language  String
+  label     String
+  fileUrl   String         @map("file_url")
+  format    SubtitleFormat @default(VTT)
+
+  content Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  episode Episode? @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+
+  @@map("subtitles")
+}
+
+// ─── OYUNCULAR ──────────────────────────────────────
+
+model Actor {
+  id       String @id @default(uuid())
+  name     String
+  photoUrl String? @map("photo_url")
+  tmdbId   Int?    @unique @map("tmdb_id")
+
+  contents ContentActor[]
+
+  @@map("actors")
+}
+
+model ContentActor {
+  contentId     String @map("content_id")
+  actorId       String @map("actor_id")
+  characterName String? @map("character_name")
+  displayOrder  Int    @default(0) @map("display_order")
+
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  actor   Actor   @relation(fields: [actorId], references: [id], onDelete: Cascade)
+
+  @@id([contentId, actorId])
+  @@map("content_actors")
+}
+
+// ─── İZLEME GEÇMİŞİ ────────────────────────────────
+
+model WatchHistory {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  contentId       String   @map("content_id")
+  episodeId       String?  @map("episode_id")
+  progressSeconds Int      @default(0) @map("progress_seconds")
+  totalSeconds    Int      @default(0) @map("total_seconds")
+  watchedAt       DateTime @default(now()) @map("watched_at")
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  episode Episode? @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, contentId, episodeId])
+  @@map("watch_history")
+}
+
+// ─── FAVORİLER ──────────────────────────────────────
+
+model Favorite {
+  userId    String   @map("user_id")
+  contentId String   @map("content_id")
+  addedAt   DateTime @default(now()) @map("added_at")
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@id([userId, contentId])
+  @@map("favorites")
+}
+
+// ─── YORUMLAR ───────────────────────────────────────
+
+model Comment {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  contentId String   @map("content_id")
+  episodeId String?  @map("episode_id")
+  parentId  String?  @map("parent_id")
+  body      String   @db.Text
+  likes     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content Content   @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  episode Episode?  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  parent  Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies Comment[] @relation("CommentReplies")
+
+  @@map("comments")
+}
+
+// ─── REKLAM YERLEŞİMLERİ ────────────────────────────
+
+model AdPlacement {
+  id            String     @id @default(uuid())
+  name          String
+  position      AdPosition
+  vastUrl       String?    @map("vast_url")
+  fallbackImage String?    @map("fallback_image")
+  fallbackLink  String?    @map("fallback_link")
+  isActive      Boolean    @default(true) @map("is_active")
+  startDate     DateTime?  @map("start_date")
+  endDate       DateTime?  @map("end_date")
+
+  @@map("ad_placements")
+}
+
+// ─── SİTE AYARLARI ──────────────────────────────────
+
+model SiteSetting {
+  key         String @id
+  value       String @db.Text
+  description String?
+
+  @@map("site_settings")
+}
